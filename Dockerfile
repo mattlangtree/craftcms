@@ -1,6 +1,6 @@
-FROM php:7.2-fpm-alpine3.7
+FROM php:7.4-fpm-alpine3.12
 
-LABEL maintainer="harald@urbantrout.io"
+LABEL maintainer="matt@domesticcat.com.au"
 
 ENV COMPOSER_NO_INTERACTION=1
 
@@ -29,11 +29,12 @@ RUN set -ex \
     git \
     findutils \
     gzip \
+    php7-zip \
+    libzip-dev \
     && docker-php-ext-configure gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install bcmath mbstring iconv gd soap zip intl mysqli pdo_mysql \
+    --with-freetype=/usr/include/ \
+    --with-jpeg=/usr/include/ \
+    && docker-php-ext-install bcmath iconv gd soap intl zip mysqli pdo_mysql \
     && pecl install imagick redis \
     && docker-php-ext-enable imagick redis \
     && rm -rf /tmp/pear \
@@ -44,7 +45,7 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 COPY ./php.ini /usr/local/etc/php/
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 
 COPY scripts/ /scripts/
 RUN chown -R www-data:www-data /scripts \

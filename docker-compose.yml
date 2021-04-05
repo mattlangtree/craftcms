@@ -30,7 +30,7 @@ services:
       CRAFTCMS_USERNAME: admin
       CRAFTCMS_PASSWORD: super-secret-password
       CRAFTCMS_SITENAME: Craft CMS Installation
-      CRAFTCMS_LANGUAGE: de-AT
+      CRAFTCMS_LANGUAGE: en-US
 
       AUTO_UPDATE: 'false'
 
